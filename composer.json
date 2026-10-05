@@ -1,11 +1,31 @@
 {
-    "name": "quire/quire",
-    "description": "File-based page router for plain PHP with middleware and named routes.",
+    "name": "joydeep-bhowmik/quire",
+    "description": "File-based page router for plain PHP: every .php or .blade.php file is a route, with middleware and named routes.",
     "type": "library",
     "license": "MIT",
-    "keywords": ["router", "file-based", "pages", "middleware", "folio"],
+    "keywords": ["router", "routing", "file-based", "pages", "middleware", "blade", "folio"],
+    "homepage": "https://github.com/joydeep-bhowmik/quire",
+    "authors": [
+        {
+            "name": "Joydeep Bhowmik",
+            "email": "bhowmikj9432@gmail.com",
+            "homepage": "https://github.com/joydeep-bhowmik"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/joydeep-bhowmik/quire/issues",
+        "source": "https://github.com/joydeep-bhowmik/quire"
+    },
     "require": {
-        "php": ">=8.1"
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "illuminate/events": "^13.34",
+        "illuminate/view": "^13.34"
+    },
+    "suggest": {
+        "illuminate/view": "Render *.blade.php pages with Quire\\Blade\\BladeRenderer.",
+        "illuminate/events": "Required by illuminate/view when using the Blade adapter."
     },
     "autoload": {
         "psr-4": {
@@ -19,11 +39,9 @@
         "test": "php tests/run.php",
         "serve": "php -S localhost:8000 -t example/public example/public/index.php"
     },
-    "suggest": {
-        "illuminate/view": "Render *.blade.php pages with Quire\\Blade\\BladeRenderer (also needs illuminate/events)."
+    "config": {
+        "sort-packages": true
     },
-    "require-dev": {
-        "illuminate/view": "^13.34",
-        "illuminate/events": "^13.34"
-    }
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

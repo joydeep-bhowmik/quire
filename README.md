@@ -27,14 +27,38 @@ pages/
 └── _error.php             →  any other error page
 ```
 
-Requires PHP 8.1+.
-
-## Quick start
+## Installation
 
 ```bash
+composer require joydeep-bhowmik/quire
+```
+
+Requires PHP 8.1+. No other dependencies. For Blade pages, also install Blade (see [Blade](#blade)).
+
+## Usage
+
+```php
+// public/index.php
+require __DIR__ . '/../vendor/autoload.php';
+
+$quire = new Quire\Quire();
+$quire->path(__DIR__ . '/../pages');
+$quire->run();
+```
+
+Send every request that isn't a real file to `index.php`. With Apache, use
+[`example/public/.htaccess`](example/public/.htaccess). With PHP's built-in server, run
+`php -S localhost:8000 -t public public/index.php`.
+
+No Composer? Download the repo and `require 'path/to/quire/bootstrap.php';` instead of the autoloader.
+
+## Example app
+
+```bash
+git clone https://github.com/joydeep-bhowmik/quire && cd quire
 composer install  # the example app uses Blade
 composer test     # run the test suite
-composer serve    # http://localhost:8000 (example app)
+composer serve    # http://localhost:8000
 ```
 
 The example is a small Blade site styled with Tailwind CSS v4:
@@ -69,20 +93,6 @@ npm run build   # minified build
 ```
 
 `tests/fixtures/` has a bigger app covering middleware, catch-alls, plain PHP pages and more.
-
-No Composer? `require 'bootstrap.php';` works too.
-
-```php
-// public/index.php
-require __DIR__ . '/../vendor/autoload.php';
-
-$quire = new Quire\Quire();
-$quire->path(__DIR__ . '/../pages');
-$quire->run();
-```
-
-Send every request that isn't a real file to `index.php` (see `example/public/.htaccess`, or
-`php -S localhost:8000 -t public public/index.php`).
 
 ## Pages
 
@@ -302,3 +312,7 @@ Inside pages and middleware, `Quire\request()` returns the current request.
 
 `$quire->handle(Request::create('POST', '/login', ['user' => 'bob'], cookies: [...]))` returns a `Response` without sending it.
 See `tests/run.php`.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
