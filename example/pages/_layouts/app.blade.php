@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="/css/app.css?v={{ @filemtime(__DIR__ . '/../../public/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body class="flex min-h-full flex-col bg-slate-50 font-sans text-slate-800 antialiased dark:bg-slate-950 dark:text-slate-200">
     <header class="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
@@ -20,10 +20,7 @@
 
             <nav class="flex gap-1 text-sm font-medium">
                 @foreach (['home' => 'Home', 'about' => 'About', 'users.index' => 'Users'] as $name => $label)
-                    @php
-                        // "users.index" stays highlighted on "users.show" too.
-                        $active = explode('.', $request->route?->name() ?? '')[0] === explode('.', $name)[0];
-                    @endphp
+                    @php($active = is_current($name))
                     <a href="{{ route($name) }}"
                        @class([
                            'rounded-md px-3 py-2 transition-colors',

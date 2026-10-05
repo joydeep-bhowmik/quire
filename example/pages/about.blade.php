@@ -19,6 +19,7 @@
         <pre class="overflow-x-auto bg-slate-900 p-5 font-mono text-sm leading-relaxed text-slate-300"><span class="text-slate-500">example/</span>
 ├── app.css                    <span class="text-slate-500">Tailwind entry</span>
 ├── postcss.config.mjs
+├── helpers.php
 ├── data/users.php
 ├── public/index.php
 └── pages/

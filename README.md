@@ -71,6 +71,7 @@ example/
 ├── public/
 │   ├── index.php                front controller (Quire + BladeRenderer)
 │   └── css/app.css              built CSS
+├── helpers.php                  global helpers: asset(), users(), user(), initials(), is_current()
 ├── data/users.php               fake data, outside pages/
 └── pages/
     ├── _layouts/app.blade.php   layout with nav

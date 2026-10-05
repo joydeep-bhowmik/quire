@@ -13,7 +13,7 @@
     <p class="mt-2 text-slate-600 dark:text-slate-400">Each one links to <code class="font-mono text-sm">users/[id].blade.php</code>.</p>
 
     <ul class="mt-8 grid gap-3 sm:grid-cols-2">
-        @foreach (require __DIR__ . '/../../data/users.php' as $id => $user)
+        @foreach (users() as $id => $user)
             <li>
                 <a href="{{ route('users.show', ['id' => $id]) }}"
                    class="group flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-indigo-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-500/50">

@@ -1,9 +1,9 @@
 @php
-    use function Quire\{name, abort};
+    use function Quire\name;
 
     name('users.show');
 
-    $user = (require __DIR__ . '/../../data/users.php')[$id] ?? abort(404, 'User not found');
+    $user = user($id); // 404s for unknown ids (see helpers.php)
 @endphp
 @use('function Quire\route')
 @extends('_layouts.app')
