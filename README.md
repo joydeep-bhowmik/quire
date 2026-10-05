@@ -96,6 +96,17 @@ npm run build   # minified build
 
 `tests/fixtures/` has a bigger app covering middleware, catch-alls, plain PHP pages and more.
 
+## Coding agents
+
+Quire ships an [Agent Skill](skills/quire/SKILL.md) that teaches coding agents (Claude Code and others that read
+`SKILL.md`) its routing rules, metadata block, middleware, error pages, Blade setup and common mistakes.
+Copy it into your project:
+
+```bash
+mkdir -p .claude/skills
+cp -r vendor/joydeep-bhowmik/quire/skills/quire .claude/skills/
+```
+
 ## Development
 
 ```bash
