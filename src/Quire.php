@@ -406,9 +406,12 @@ final class Quire
         $file = null;
         $extension = '.php';
 
-        foreach (["_{$e->status}", '_error'] as $candidate) {
+        // _errors/404.php (or .blade.php) first, then the catch-all _errors/error.php.
+        $directory = $mount ? $mount->path . DIRECTORY_SEPARATOR . '_errors' . DIRECTORY_SEPARATOR : null;
+
+        foreach ($directory ? [(string) $e->status, 'error'] : [] as $candidate) {
             foreach ($this->extensions() as $ext) {
-                if ($mount && is_file($path = $mount->path . DIRECTORY_SEPARATOR . $candidate . $ext)) {
+                if (is_file($path = $directory . $candidate . $ext)) {
                     [$file, $extension] = [$path, $ext];
                     break 2;
                 }

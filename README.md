@@ -23,8 +23,9 @@ pages/
 │   ├── _middleware.php    →  (middleware for everything in admin/)
 │   └── index.php          →  /admin
 ├── _partials/             →  (ignored: files/folders starting with _ or . aren't routes)
-├── _404.php               →  404 page
-└── _error.php             →  any other error page
+└── _errors/
+    ├── 404.php            →  404 page
+    └── error.php          →  any other error page
 ```
 
 ## Installation
@@ -76,7 +77,7 @@ example/
 └── pages/
     ├── _layouts/app.blade.php   layout with nav
     ├── _components/avatar.blade.php   <x-avatar>
-    ├── _404.blade.php           404 page
+    ├── _errors/404.blade.php    404 page
     ├── index.blade.php          /
     ├── about.blade.php          /about
     └── users/
@@ -161,7 +162,7 @@ $quire->extension('.blade.php', $blade);
 ```
 
 Now `pages/team/[member].blade.php` is served at `/team/{member}`. Route params, `$request`, middleware, names,
-`_middleware.php`, and error pages (`_404.blade.php`) all work as they do for plain PHP pages. Layouts and partials go in `_`-folders,
+`_middleware.php`, and error pages (`_errors/404.blade.php`) all work as they do for plain PHP pages. Layouts and partials go in `_`-folders,
 so they never become routes: `@extends('_layouts.app')` loads `pages/_layouts/app.blade.php`.
 
 Put metadata at the top in an `@php` block (or a plain `<?php ?>` block):
@@ -287,8 +288,16 @@ or `[id].php` and `[slug].php` in the same folder), Quire throws an error.
 
 ## Errors
 
-`abort($status, $message)` anywhere (page or middleware) renders `_{status}.php` (such as `_404.php`), then `_error.php`,
-from the mount's root folder. If neither exists, you get plain text. Error pages get `$status`, `$message`, `$exception` and `$request`.
+`abort($status, $message)` anywhere (page or middleware) renders `_errors/{status}.php` (such as `_errors/404.php`),
+then `_errors/error.php`, from the mount's root folder. Either can be `.blade.php`. If neither exists, you get plain text.
+
+```
+pages/_errors/
+├── 404.blade.php   ← not found
+├── 403.blade.php   ← forbidden
+└── error.php       ← everything else (405, 500...)
+```
+ Error pages get `$status`, `$message`, `$exception` and `$request`.
 Uncaught exceptions become `500`. Turn on `$quire->debug()` to see the real message (never in production).
 
 ## Request & Response

@@ -25,6 +25,7 @@
 └── pages/
     ├── <span class="text-slate-500">_layouts/app.blade.php</span>
     ├── <span class="text-slate-500">_components/avatar.blade.php</span>
+    ├── <span class="text-slate-500">_errors/404.blade.php</span>
     ├── index.blade.php        <span class="text-indigo-400">→ /</span>
     ├── about.blade.php        <span class="text-indigo-400">→ /about</span>
     └── users/

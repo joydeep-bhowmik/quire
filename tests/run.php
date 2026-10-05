@@ -40,7 +40,9 @@ check('/docs/a/b/c catch-all', str_contains(get('/docs/a/b/c')->body, 'a â†’ b â
 check('/docs alone is 404 (catch-all needs 1+)', get('/docs')->status === 404);
 check('/blog optional catch-all (empty)', str_contains(get('/blog')->body, '<h1>Blog</h1>'));
 check('/blog/2026/hi optional catch-all', str_contains(get('/blog/2026/hi')->body, 'Post: hi'));
-check('unknown path -> _404.php', get('/nope')->status === 404 && str_contains(get('/nope')->body, '<h1>404</h1>'));
+check('unknown path -> _errors/404.php', get('/nope')->status === 404 && str_contains(get('/nope')->body, '<h1>404</h1>'));
+check('other statuses -> _errors/error.php', str_contains(get('/about', method: 'POST')->body, '<title>Error 405</title>'));
+check('_errors/ is not routable', get('/_errors/404')->status === 404 && get('/_errors/error')->status === 404);
 check('_partials are not routable', get('/_partials/header')->status === 404);
 check('_middleware.php is not routable', get('/admin/_middleware')->status === 404);
 check('url-encoded segment decoded', str_contains(get('/docs/hello%20world')->body, 'hello world'));
@@ -116,7 +118,7 @@ echo "\nBlade\n";
     check('@php middleware(): user allowed', str_contains(get('/team/manage', ['user' => 'bob'])->body, 'Hi bob'));
     check('global middleware wraps Blade pages', get('/team')->getHeader('X-Response-Time') !== null);
     $forbidden = get('/admin', ['user' => 'bob']);
-    check('_403.blade.php error page', $forbidden->status === 403 && str_contains($forbidden->body, '<h1>403 Forbidden</h1>'));
+    check('_errors/403.blade.php error page', $forbidden->status === 403 && str_contains($forbidden->body, '<h1>403 Forbidden</h1>'));
     check('no route for raw /team/index.blade', get('/team/index.blade')->status === 404);
     check('__DIR__/__FILE__ in Blade point at the page, not the cache',
         str_contains(get('/team/where')->body, 'dir=team file=where.blade.php php-block=team'));
@@ -140,7 +142,7 @@ echo "\nExample app\n";
     check('<x-avatar> initials', str_contains($hit('/users')->body, '>AL</span>'));
     check('user page via user() helper', (bool) preg_match('#<h1[^>]*>Grace Hopper</h1>#', $hit('/users/3')->body));
     check('nav highlights Users on user page', (bool) preg_match('#aria-current="page"\s*>Users</a>#', $hit('/users/3')->body));
-    check('unknown user -> _404.blade.php', $hit('/users/9')->status === 404 && str_contains($hit('/users/9')->body, 'User not found'));
+    check('unknown user -> _errors/404.blade.php', $hit('/users/9')->status === 404 && str_contains($hit('/users/9')->body, 'User not found'));
     check('helpers: initials()', initials('grace  brewster hopper') === 'GB');
     check('helpers: users() / user()', count(users()) === 3 && user('2')['name'] === 'Alan Turing');
     check('helpers: asset() adds version', (bool) preg_match('#^/css/app\.css\?v=\d+$#', asset('css/app.css')));
