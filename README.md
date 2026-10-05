@@ -76,8 +76,8 @@ example/
 ├── data/users.php               fake data, outside pages/
 └── pages/
     ├── _layouts/app.blade.php   layout with nav
-    ├── _components/avatar.blade.php   <x-avatar>
-    ├── _errors/404.blade.php    404 page
+    ├── _components/             <x-avatar>, <x-error-page>, <x-error-action>
+    ├── _errors/                 400, 401, 403, 404, 405, 419, 429, 500, 503 + error.blade.php
     ├── index.blade.php          /
     ├── about.blade.php          /about
     └── users/

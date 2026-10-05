@@ -143,6 +143,33 @@ echo "\nExample app\n";
     check('user page via user() helper', (bool) preg_match('#<h1[^>]*>Grace Hopper</h1>#', $hit('/users/3')->body));
     check('nav highlights Users on user page', (bool) preg_match('#aria-current="page"\s*>Users</a>#', $hit('/users/3')->body));
     check('unknown user -> _errors/404.blade.php', $hit('/users/9')->status === 404 && str_contains($hit('/users/9')->body, 'User not found'));
+    // Every page in example/pages/_errors, rendered through the real error path.
+    $example->middleware(function (Request $request, Closure $next) {
+        if (isset($request->query['abort'])) {
+            \Quire\abort((int) $request->query['abort'], (string) ($request->query['msg'] ?? ''), ['Retry-After' => '30']);
+        }
+
+        return $next($request);
+    });
+    $errorPages = [400 => 'Bad request', 401 => 'Please sign in', 403 => 'Access denied', 404 => 'Page not found',
+        405 => 'Method not allowed', 419 => 'Page expired', 429 => 'Slow down', 500 => 'Something went wrong',
+        503 => 'Back soon', 418 => 'Error'];
+    $errorsOk = true;
+    foreach ($errorPages as $code => $title) {
+        $response = $hit("/?abort={$code}");
+        $ok = $response->status === $code
+            && (bool) preg_match('#<h1[^>]*>' . preg_quote($title, '#') . '</h1>#', $response->body)
+            && str_contains($response->body, '<nav');
+        if (!$ok) {
+            echo "    {$code}: status {$response->status}, " . substr(strip_tags($response->body), 0, 120) . "\n";
+        }
+        $errorsOk = $errorsOk && $ok;
+    }
+    check('all _errors pages render on the layout (400-503 + error.blade.php)', $errorsOk);
+    check('error page shows custom abort() message', str_contains($hit('/?abort=403&msg=Admins+only')->body, 'Admins only'));
+    check('error page hides bare reason phrase', !str_contains($hit('/?abort=403')->body, '>Forbidden<'));
+    check('429 reads Retry-After header', str_contains($hit('/?abort=429')->body, 'Try again in 30 seconds'));
+    check('405 lists allowed methods', str_contains($example->handle(Request::create('POST', '/about'))->body, 'Allowed: GET'));
     check('helpers: initials()', initials('grace  brewster hopper') === 'GB');
     check('helpers: users() / user()', count(users()) === 3 && user('2')['name'] === 'Alan Turing');
     check('helpers: asset() adds version', (bool) preg_match('#^/css/app\.css\?v=\d+$#', asset('css/app.css')));
