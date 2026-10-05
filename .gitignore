@@ -1,0 +1,4 @@
+/vendor/
+/tests/fixtures/storage/
+/example/storage/
+/example/node_modules/

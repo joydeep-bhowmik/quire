@@ -1,0 +1,29 @@
+{
+    "name": "quire/quire",
+    "description": "File-based page router for plain PHP with middleware and named routes.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["router", "file-based", "pages", "middleware", "folio"],
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Quire\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "scripts": {
+        "test": "php tests/run.php",
+        "serve": "php -S localhost:8000 -t example/public example/public/index.php"
+    },
+    "suggest": {
+        "illuminate/view": "Render *.blade.php pages with Quire\\Blade\\BladeRenderer (also needs illuminate/events)."
+    },
+    "require-dev": {
+        "illuminate/view": "^13.34",
+        "illuminate/events": "^13.34"
+    }
+}

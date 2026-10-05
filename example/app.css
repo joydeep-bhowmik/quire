@@ -1,0 +1,7 @@
+/* Tailwind entry. Built to public/css/app.css. Scans pages/ for class names. */
+@import "tailwindcss" source(none);
+@source "./pages";
+
+@theme {
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
