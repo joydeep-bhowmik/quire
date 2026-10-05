@@ -2,4 +2,6 @@
 /composer.lock
 /tests/fixtures/storage/
 /example/storage/
+/example/vendor/
 /example/node_modules/
+/example/composer.lock

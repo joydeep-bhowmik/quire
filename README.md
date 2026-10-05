@@ -55,17 +55,17 @@ No Composer? Download the repo and `require 'path/to/quire/bootstrap.php';` inst
 
 ## Example app
 
-```bash
-git clone https://github.com/joydeep-bhowmik/quire && cd quire
-composer install  # the example app uses Blade
-composer test     # run the test suite
-composer serve    # http://localhost:8000
-```
+[`example/`](example) is a ready-made starter project: a small Blade site styled with Tailwind CSS v4,
+with its own `composer.json` that pulls in Quire and Blade. Copy the folder anywhere and run:
 
-The example is a small Blade site styled with Tailwind CSS v4:
+```bash
+composer install   # installs joydeep-bhowmik/quire, illuminate/view, illuminate/events
+composer serve     # http://localhost:8000
+```
 
 ```
 example/
+├── composer.json                requires joydeep-bhowmik/quire + Blade, autoloads helpers.php
 ├── app.css                      Tailwind entry (@import "tailwindcss")
 ├── postcss.config.mjs           @tailwindcss/postcss, like Next.js
 ├── package.json                 npm run dev / npm run build
@@ -95,6 +95,14 @@ npm run build   # minified build
 ```
 
 `tests/fixtures/` has a bigger app covering middleware, catch-alls, plain PHP pages and more.
+
+## Development
+
+```bash
+git clone https://github.com/joydeep-bhowmik/quire && cd quire
+composer install   # dev dependencies include Blade
+composer test      # run the test suite
+```
 
 ## Pages
 

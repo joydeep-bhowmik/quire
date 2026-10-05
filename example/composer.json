@@ -1,0 +1,34 @@
+{
+    "name": "joydeep-bhowmik/quire-example",
+    "description": "Example Quire app: Blade pages styled with Tailwind CSS.",
+    "type": "project",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/joydeep-bhowmik/quire"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/events": "^13.0",
+        "illuminate/view": "^13.0",
+        "joydeep-bhowmik/quire": "^0.1"
+    },
+    "autoload": {
+        "files": [
+            "helpers.php"
+        ]
+    },
+    "scripts": {
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S localhost:8000 -t public public/index.php"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

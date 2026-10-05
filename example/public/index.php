@@ -10,8 +10,8 @@ if (PHP_SAPI === 'cli-server' && is_file(__DIR__ . parse_url($_SERVER['REQUEST_U
     return false;
 }
 
-require __DIR__ . '/../../vendor/autoload.php';
-require __DIR__ . '/../helpers.php';
+// Quire, Blade and helpers.php, all via composer.json.
+require __DIR__ . '/../vendor/autoload.php';
 
 $pages = __DIR__ . '/../pages';
 

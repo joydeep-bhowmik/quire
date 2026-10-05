@@ -36,8 +36,7 @@
         ]
     },
     "scripts": {
-        "test": "php tests/run.php",
-        "serve": "php -S localhost:8000 -t example/public example/public/index.php"
+        "test": "php tests/run.php"
     },
     "config": {
         "sort-packages": true
